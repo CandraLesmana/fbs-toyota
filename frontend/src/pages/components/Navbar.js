@@ -15,7 +15,8 @@ const Navbar = () => {
           }).then(function (res) {
             console.log(res);
             if(res.data.success == true){
-                navigate('/login');
+              localStorage.removeItem('authToken')
+              navigate('/login');
             }
           }).catch(function (error) {
             console.log(error);
