@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const apiUrl = process.env.REACT_APP_ENPOINT; 
@@ -21,8 +22,11 @@ function Login() {
                 localStorage.setItem('authToken', res.data.token);
                 navigate('/');
             }
+            setMessage(res.data.message)
+            console.log(res.data.message);
           }).catch(function (error) {
             console.log(error);
+            setMessage('Login Failed')
           });
       };
 
@@ -34,6 +38,11 @@ function Login() {
                         <div className='d-flex justify-content-center'>
                             <h4 className='title'>Login</h4>
                         </div>
+                        {message && (
+                            <>
+                                <div className='alert alert-danger'>{message}</div>
+                            </>
+                        )}
                         <div className='form-group'>
                             <label>Email</label>
                             <input type='text' onChange={(e) => setEmail(e.target.value)} value={email} className='form-control'></input>
